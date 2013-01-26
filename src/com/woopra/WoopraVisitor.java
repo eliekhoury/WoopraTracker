@@ -3,8 +3,16 @@ package com.woopra;
 import java.util.Properties;
 import java.util.UUID;
 
+import android.content.Context;
+import android.telephony.TelephonyManager;
+
+/**
+ * @author Woopra on 1/26/2013
+ * 
+ */
 public class WoopraVisitor {
 
+	private static final String APP_KEY = "Woopra_android";
 	private String cookie;
 	private Properties properties = null;
 
@@ -12,10 +20,41 @@ public class WoopraVisitor {
 		properties = new Properties();
 	}
 
-	public static WoopraVisitor anonymousVisitor() {
+	public static WoopraVisitor getAnonymousVisitor() {
 		WoopraVisitor visitor = new WoopraVisitor();
 		visitor.setCookie(getUUID());
 		return visitor;
+	}
+
+	public static WoopraVisitor getVisitorByCookie(String cookie) {
+		WoopraVisitor visitor = new WoopraVisitor();
+		visitor.setCookie(cookie);
+		return visitor;
+	}
+
+	public static WoopraVisitor getVisitorByEmail(String email) {
+		WoopraVisitor visitor = new WoopraVisitor();
+		visitor.setCookie(getUUID(APP_KEY, email));
+		visitor.addProperty("email", email);
+		return visitor;
+	}
+
+	public static WoopraVisitor getVisitorByString(String key) {
+		WoopraVisitor visitor = new WoopraVisitor();
+		visitor.setCookie(getUUID(APP_KEY, key));
+		visitor.addProperty("email", key);
+		return visitor;
+	}
+
+	private static String getUUID(String fristKey, String secondKey) {
+		long mostSigBits = fristKey.hashCode();
+		long leastSigBits = secondKey.hashCode();
+		UUID generateUUID = new UUID(mostSigBits, leastSigBits);
+		String result = generateUUID.toString();
+		result = result.substring(0, 8) + result.substring(9, 13)
+				+ result.substring(14, 18) + result.substring(19, 23)
+				+ result.substring(24);
+		return result.toString();
 	}
 
 	private static String getUUID() {

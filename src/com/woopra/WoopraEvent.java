@@ -1,7 +1,10 @@
 package com.woopra;
 
 import java.util.Properties;
-
+/**
+ * @author Woopra on 1/26/2013
+ * 
+ */
 public class WoopraEvent {
 	private String eventName = null;
 	private Properties properties = null;

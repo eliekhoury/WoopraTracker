@@ -27,6 +27,7 @@ public class WoopraTracker {
 	// default timeout value for Woopra service
 	private int idleTimeout = 30;
 	private boolean pingEnabled = false;
+
 	//
 	private String referer = null;
 
@@ -38,9 +39,13 @@ public class WoopraTracker {
 	public static WoopraTracker getInstance() {
 		if (gSingleton == null) {
 			gSingleton = new WoopraTracker();
-			gSingleton.setVisitor(WoopraVisitor.anonymousVisitor());
+			gSingleton.setVisitor(WoopraVisitor.getAnonymousVisitor());
 		}
 		return gSingleton;
+	}
+
+	public void resetVisitorByUniqueId(String uniqueId) {
+		gSingleton.setVisitor(WoopraVisitor.getVisitorByString(uniqueId));
 	}
 
 	public boolean trackEvent(WoopraEvent event) {

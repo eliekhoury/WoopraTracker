@@ -10,6 +10,8 @@ import com.woopra.R.layout;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +19,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * @author Woopra on 1/26/2013
+ * 
+ */
 public class SamplesActivity extends Activity {
 	EditText host = null;
 	CheckBox ping = null;
@@ -74,6 +80,11 @@ public class SamplesActivity extends Activity {
 			// A new instance of the Woopra tracker will be created and we'll
 			// set it up for mybusiness.com
 
+			// get imei
+			TelephonyManager mTelephonyMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+			String imei = mTelephonyMgr.getDeviceId();
+			WoopraTracker.getInstance().resetVisitorByUniqueId(imei);
+			//
 			WoopraTracker.getInstance().setPingEnabled(ping.isChecked());
 			WoopraTracker.getInstance().setIdleTimeout(
 					Integer.valueOf(timeout.getText().toString())); // seconds
