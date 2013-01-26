@@ -1,0 +1,19 @@
+<resources>
+
+    <string name="app_name">woopra</string>
+    <string name="host">HOST</string>
+    <string name="timeout">timeout</string>
+    <string name="ping">ping</string>
+    <string name="visitor_key1">visitor key 1</string>
+    <string name="visitor_value1">visitor value 1</string>
+    <string name="visitor_key2">visitor key 2</string>
+    <string name="visitor_value2">visitor value 2</string>
+    <string name="event_key1">event key 1</string>
+    <string name="event_value1">event value 1</string>
+    <string name="event_key2">event key 2</string>
+    <string name="event_value2">event value 2</string>
+    <string name="event_key3">event key 3</string>
+    <string name="event_value3">event value 3</string>
+    <string name="title_activity_main">SamplesActivity</string>
+
+</resources>

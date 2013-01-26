@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    android:scrollbars="none" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/host" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/host"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="mywebsite.com" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ping" >
+        </TextView>
+
+        <CheckBox
+            android:id="@+id/ping"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="enable" >
+        </CheckBox>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/timeout" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/timeout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="300000" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/visitor_key1" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/visitor_key1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="name" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/visitor_value1" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/visitor_value1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="John+Smith" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/visitor_key2" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/visitor_key2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="email" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/visitor_value2" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/visitor_value2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="john@mail.com" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/event_key1" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/event_key1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="name" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/event_value1" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/event_value1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="purchase" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/event_key2" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/event_key2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="item" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/event_value2" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/event_value2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Coffee+Machine" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/event_key3" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/event_key3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="sku" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/event_value3" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/event_value3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="K5236532" />
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit" />
+    </LinearLayout>
+
+</ScrollView>
