@@ -1,6 +1,7 @@
 package com.woopra;
 
 import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
 import java.util.Properties;
 
 import org.apache.http.HttpResponse;
@@ -25,12 +26,15 @@ public class WoopraTracker {
 	private String domain = null;
 	// default timeout value for Woopra service
 	private int idleTimeout = 30;
+	// ping
 	private boolean pingEnabled = false;
 
+	StringBuilder pingUrlBuilder = new StringBuilder();
 	//
 	private String referer = null;
 
 	private WoopraVisitor visitor = null;
+	private WoopraPing ping = null;
 
 	private WoopraTracker() {
 	}
@@ -47,7 +51,7 @@ public class WoopraTracker {
 	// gSingleton.setVisitor(WoopraVisitor.getVisitorByString(uniqueId));
 	// }
 
-	public void resetVisitorByContext(Context context) {
+	public void resetVisitorContext(Context context) {
 		gSingleton.setVisitor(WoopraVisitor.getVisitorByContent(context));
 	}
 
@@ -62,6 +66,7 @@ public class WoopraTracker {
 					"WTracker.visitor property must be set before [WTracker trackEvent:] invocation");
 			return false;
 		}
+		// generate request url
 		StringBuilder urlBuilder = new StringBuilder();
 		urlBuilder.append(W_EVENT_ENDPOINT).append("?host=")
 				.append(getDomain()).append("&cookie=")
@@ -70,6 +75,7 @@ public class WoopraTracker {
 		if (referer != null) {
 			urlBuilder.append("&referer=").append(referer);
 		}
+		//
 		// Add visitors properties
 		for (Entry<Object, Object> entry : visitor.getProperties().entrySet()) {
 			urlBuilder.append("&cv_").append(entry.getKey()).append("=")
@@ -81,13 +87,12 @@ public class WoopraTracker {
 					.append(entry.getValue());
 		}
 		Log.i(LOG_TAG, "Final url:" + urlBuilder.toString());
+		// generate ping url
 		//
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(urlBuilder.toString());
 		try {
-
 			HttpResponse response = httpClient.execute(httpGet);
-
 			Log.i(LOG_TAG,
 					"Response:" + EntityUtils.toString(response.getEntity()));
 		} catch (Exception e) {
@@ -117,8 +122,21 @@ public class WoopraTracker {
 		return pingEnabled;
 	}
 
-	public void setPingEnabled(boolean pingEnabled) {
-		this.pingEnabled = pingEnabled;
+	/**
+	 * This method must called after resetVisitorByContext and setIdleTimeout
+	 * @param newPingEnabled
+	 */
+	public void setPingEnabled(boolean newPingEnabled) {
+		if (newPingEnabled != pingEnabled) {
+			if (newPingEnabled) {
+				ping = new WoopraPing(domain, getVisitor().getCookie(),
+						idleTimeout);
+				ping.start();
+			} else {
+				ping.stopPing();
+			}
+		}
+		this.pingEnabled = newPingEnabled;
 	}
 
 	public WoopraVisitor getVisitor() {

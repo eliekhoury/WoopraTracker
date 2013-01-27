@@ -78,12 +78,13 @@ public class SamplesActivity extends Activity {
 			// A new instance of the Woopra tracker will be created and we'll
 			// set it up for mybusiness.com
 
-			WoopraTracker.getInstance().resetVisitorByContext(
+			WoopraTracker.getInstance().resetVisitorContext(
 					SamplesActivity.this);
 			//
-			WoopraTracker.getInstance().setPingEnabled(ping.isChecked());
 			WoopraTracker.getInstance().setIdleTimeout(
 					Integer.valueOf(timeout.getText().toString())); // seconds
+
+			WoopraTracker.getInstance().setPingEnabled(ping.isChecked());
 
 			// When instantiated, the SDK will try to find a store woopra user
 			// identifier, if it's not found, it will be generated and saved to
