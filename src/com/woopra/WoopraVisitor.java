@@ -4,7 +4,8 @@ import java.util.Properties;
 import java.util.UUID;
 
 import android.content.Context;
-import android.telephony.TelephonyManager;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 /**
  * @author Woopra on 1/26/2013
@@ -13,11 +14,32 @@ import android.telephony.TelephonyManager;
 public class WoopraVisitor {
 
 	private static final String APP_KEY = "Woopra_android";
+	private static final String COOKIE_KEY = "COOKIE";
+	private static final String NOT_SET = "NOT_SET";
 	private String cookie;
 	private Properties properties = null;
 
 	private WoopraVisitor() {
 		properties = new Properties();
+	}
+
+	public static WoopraVisitor getVisitorByContent(Context context) {
+		WoopraVisitor visitor = null;
+		// Application wide preferences
+		SharedPreferences preferences = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		String cookieStore = preferences.getString(COOKIE_KEY, NOT_SET);
+		// if application first start, create a new cookie
+		if (NOT_SET.equals(cookieStore)) {
+			visitor = getAnonymousVisitor();
+			SharedPreferences.Editor editor = preferences.edit();
+			editor.putString(COOKIE_KEY, visitor.getCookie());
+			editor.commit();
+			// else use the exist cookie
+		} else {
+			visitor = getVisitorByCookie(cookieStore);
+		}
+		return visitor;
 	}
 
 	public static WoopraVisitor getAnonymousVisitor() {

@@ -5,14 +5,12 @@ import java.util.Properties;
 import com.woopra.R;
 import com.woopra.WoopraEvent;
 import com.woopra.WoopraTracker;
-import com.woopra.R.layout;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.telephony.TelephonyManager;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -83,7 +81,8 @@ public class SamplesActivity extends Activity {
 			// get imei
 			TelephonyManager mTelephonyMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 			String imei = mTelephonyMgr.getDeviceId();
-			WoopraTracker.getInstance().resetVisitorByUniqueId(imei);
+			WoopraTracker.getInstance().resetVisitorByContext(
+					SamplesActivity.this);
 			//
 			WoopraTracker.getInstance().setPingEnabled(ping.isChecked());
 			WoopraTracker.getInstance().setIdleTimeout(

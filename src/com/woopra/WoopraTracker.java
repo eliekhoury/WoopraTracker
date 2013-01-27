@@ -1,18 +1,17 @@
 package com.woopra;
 
-import java.io.IOException;
 import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import android.content.Context;
 import android.util.Log;
-import android.util.Property;
 
 /**
  * @author Woopra on 1/26/2013
@@ -44,8 +43,12 @@ public class WoopraTracker {
 		return gSingleton;
 	}
 
-	public void resetVisitorByUniqueId(String uniqueId) {
-		gSingleton.setVisitor(WoopraVisitor.getVisitorByString(uniqueId));
+	// public void resetVisitorByUniqueId(String uniqueId) {
+	// gSingleton.setVisitor(WoopraVisitor.getVisitorByString(uniqueId));
+	// }
+
+	public void resetVisitorByContext(Context context) {
+		gSingleton.setVisitor(WoopraVisitor.getVisitorByContent(context));
 	}
 
 	public boolean trackEvent(WoopraEvent event) {
@@ -82,7 +85,9 @@ public class WoopraTracker {
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(urlBuilder.toString());
 		try {
+
 			HttpResponse response = httpClient.execute(httpGet);
+
 			Log.i(LOG_TAG,
 					"Response:" + EntityUtils.toString(response.getEntity()));
 		} catch (Exception e) {
