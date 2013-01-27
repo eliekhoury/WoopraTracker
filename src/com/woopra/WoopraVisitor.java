@@ -14,7 +14,7 @@ import android.preference.PreferenceManager;
 public class WoopraVisitor {
 
 	private static final String APP_KEY = "Woopra_android";
-	private static final String COOKIE_KEY = "COOKIE";
+	private static final String COOKIE_KEY = "Woopra_android_cookie";
 	private static final String NOT_SET = "NOT_SET";
 	private String cookie;
 	private Properties properties = null;

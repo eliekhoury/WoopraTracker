@@ -78,9 +78,6 @@ public class SamplesActivity extends Activity {
 			// A new instance of the Woopra tracker will be created and we'll
 			// set it up for mybusiness.com
 
-			// get imei
-			TelephonyManager mTelephonyMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-			String imei = mTelephonyMgr.getDeviceId();
 			WoopraTracker.getInstance().resetVisitorByContext(
 					SamplesActivity.this);
 			//
