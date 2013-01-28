@@ -29,7 +29,6 @@ public class WoopraTracker {
 	// ping
 	private boolean pingEnabled = false;
 
-	StringBuilder pingUrlBuilder = new StringBuilder();
 	//
 	private String referer = null;
 
@@ -87,7 +86,6 @@ public class WoopraTracker {
 					.append(entry.getValue());
 		}
 		Log.i(LOG_TAG, "Final url:" + urlBuilder.toString());
-		// generate ping url
 		//
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(urlBuilder.toString());
@@ -98,6 +96,10 @@ public class WoopraTracker {
 		} catch (Exception e) {
 			Log.e(LOG_TAG, "Got error!", e);
 			return false;
+		}
+		// reset ping
+		if (pingEnabled) {
+			resetPing(domain, getVisitor().getCookie(), idleTimeout);
 		}
 		return true;
 	}
@@ -122,21 +124,24 @@ public class WoopraTracker {
 		return pingEnabled;
 	}
 
+	public void setPingEnabled(boolean newPingEnabled) {
+		this.pingEnabled = newPingEnabled;
+		if (newPingEnabled == false && ping != null) {
+			ping.stopPing();
+		}
+	}
+
 	/**
 	 * This method must called after resetVisitorByContext and setIdleTimeout
+	 * 
 	 * @param newPingEnabled
 	 */
-	public void setPingEnabled(boolean newPingEnabled) {
-		if (newPingEnabled != pingEnabled) {
-			if (newPingEnabled) {
-				ping = new WoopraPing(domain, getVisitor().getCookie(),
-						idleTimeout);
-				ping.start();
-			} else {
-				ping.stopPing();
-			}
+	public void resetPing(String domain, String cookie, int idleTimeout) {
+		if (ping != null) {
+			ping.stopPing();
 		}
-		this.pingEnabled = newPingEnabled;
+		ping = new WoopraPing(domain, cookie, idleTimeout);
+		ping.start();
 	}
 
 	public WoopraVisitor getVisitor() {

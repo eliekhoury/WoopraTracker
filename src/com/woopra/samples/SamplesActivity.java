@@ -120,4 +120,11 @@ public class SamplesActivity extends Activity {
 
 		}
 	}
+
+	@Override
+	protected void onDestroy() {
+		// Should stop ping when exit the application
+		WoopraTracker.getInstance().setPingEnabled(false);
+		super.onDestroy();
+	}
 }
