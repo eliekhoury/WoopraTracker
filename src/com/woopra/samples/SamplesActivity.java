@@ -60,65 +60,60 @@ public class SamplesActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				new RequestSender().execute();
+				trackerTest();
 				Toast.makeText(SamplesActivity.this, "Http request sending...",
 						Toast.LENGTH_LONG).show();
 			}
 		});
 	}
 
-	public class RequestSender extends AsyncTask<String, String, Boolean> {
+	public boolean trackerTest() {
 
-		@Override
-		protected Boolean doInBackground(String... params) {
+		//
+		WoopraTracker.getInstance().setup(host.getText().toString());
 
-			//
-			WoopraTracker.getInstance().setup(host.getText().toString());
+		// A new instance of the Woopra tracker will be created and we'll
+		// set it up for mybusiness.com
 
-			// A new instance of the Woopra tracker will be created and we'll
-			// set it up for mybusiness.com
+		WoopraTracker.getInstance().resetVisitorContext(SamplesActivity.this);
+		//
+		WoopraTracker.getInstance().setIdleTimeout(
+				Integer.valueOf(timeout.getText().toString())); // seconds
 
-			WoopraTracker.getInstance().resetVisitorContext(
-					SamplesActivity.this);
-			//
-			WoopraTracker.getInstance().setIdleTimeout(
-					Integer.valueOf(timeout.getText().toString())); // seconds
+		WoopraTracker.getInstance().setPingEnabled(ping.isChecked());
 
-			WoopraTracker.getInstance().setPingEnabled(ping.isChecked());
+		// When instantiated, the SDK will try to find a store woopra user
+		// identifier, if it's not found, it will be generated and saved to
+		// be reused in the future. We call this identifier the cookie.
+		// Then we should be able to add and remove properties to the
+		// Visitor object.
+		// method addVisitorProperty example
+		WoopraTracker.getInstance().addVisitorProperty(
+				visitorKey1.getText().toString(),
+				visitorValue1.getText().toString());
+		// method addVisitorProperties example
+		Properties visitorProperties = new Properties();
+		visitorProperties.setProperty(visitorKey2.getText().toString(),
+				visitorValue2.getText().toString());
+		WoopraTracker.getInstance().addVisitorProperties(visitorProperties); // Properties
+																				// object.
 
-			// When instantiated, the SDK will try to find a store woopra user
-			// identifier, if it's not found, it will be generated and saved to
-			// be reused in the future. We call this identifier the cookie.
-			// Then we should be able to add and remove properties to the
-			// Visitor object.
-			// method addVisitorProperty example
-			WoopraTracker.getInstance().addVisitorProperty(
-					visitorKey1.getText().toString(),
-					visitorValue1.getText().toString());
-			// method addVisitorProperties example
-			Properties visitorProperties = new Properties();
-			visitorProperties.setProperty(visitorKey2.getText().toString(),
-					visitorValue2.getText().toString());
-			WoopraTracker.getInstance().addVisitorProperties(visitorProperties); // Properties
-																					// object.
+		WoopraEvent event = new WoopraEvent("appview");
+		// or
+		// WoopraEvent event = new WoopraEvent("appview", properties);
+		// method addVisitorProperty example
+		event.addEventProperty(eventKey1.getText().toString(), eventValue1
+				.getText().toString());
+		// method addVisitorProperties example
+		Properties eventProperties = new Properties();
+		eventProperties.setProperty(eventKey2.getText().toString(), eventValue2
+				.getText().toString());
+		eventProperties.setProperty(eventKey3.getText().toString(), eventValue3
+				.getText().toString());
+		event.addEventProperties(eventProperties);
 
-			WoopraEvent event = new WoopraEvent("appview");
-			// or
-			// WoopraEvent event = new WoopraEvent("appview", properties);
-			// method addVisitorProperty example
-			event.addEventProperty(eventKey1.getText().toString(), eventValue1
-					.getText().toString());
-			// method addVisitorProperties example
-			Properties eventProperties = new Properties();
-			eventProperties.setProperty(eventKey2.getText().toString(),
-					eventValue2.getText().toString());
-			eventProperties.setProperty(eventKey3.getText().toString(),
-					eventValue3.getText().toString());
-			event.addEventProperties(eventProperties);
+		return WoopraTracker.getInstance().trackEvent(event);
 
-			return WoopraTracker.getInstance().trackEvent(event);
-
-		}
 	}
 
 	@Override
